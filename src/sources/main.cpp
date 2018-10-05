@@ -157,7 +157,7 @@ int main()
         //view matrix is depedent on camera, which isn't set yet
         glm::mat4 view = glm::mat4();
         view = glm::translate(view, glm::vec3(0.0f, -0.5f, -4.5f));
-        view = glm::rotate(view, glm::radians(20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        //view = glm::rotate(view, glm::radians(20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         ourShader.setMatrix("view", view);
         ourShader.setMatrix("projection", projectionMat(45.0f, 8/6, 0.1f, 100.0f, false));
 
