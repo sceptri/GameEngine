@@ -122,11 +122,11 @@ int main()
     model1.rUnit.activateAttribPointer(at2);
 
     //loading shaders, parsing them, linking them etc.
-    shader ourShader("/home/sceptri/Dev/Dev/QtWorkspace/GameEngineOrdered/shaders/shader.vs",
-                     "/home/sceptri/Dev/Dev/QtWorkspace/GameEngineOrdered/shaders/shader.fs"); //absolute path
+    shader ourShader("/home/sceptri/Dev/Dev/QtWorkspace/GameEngine/shaders/shader.vs",
+                     "/home/sceptri/Dev/Dev/QtWorkspace/GameEngine/shaders/shader.fs"); //absolute path
 
-    int tex1 = model1.genTexture("/home/sceptri/Dev/Dev/QtWorkspace/GameEngineOrdered/res/container.jpg", GL_RGB);
-    int tex2 = model1.genTexture("/home/sceptri/Dev/Dev/QtWorkspace/GameEngineOrdered/res/awesomeface.png", GL_RGBA);
+    int tex1 = model1.genTexture("/home/sceptri/Dev/Dev/QtWorkspace/GameEngine/res/container.jpg", GL_RGB);
+    int tex2 = model1.genTexture("/home/sceptri/Dev/Dev/QtWorkspace/GameEngine/res/awesomeface.png", GL_RGBA);
 
     model1.freeRender();
 
