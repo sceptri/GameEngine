@@ -139,7 +139,7 @@ int main()
     while(!glfwWindowShouldClose(window))
     {
         model1.rotate(glfwGetTime(), 0, 1, 0, true);
-
+        model1.translate(2*glm::sin(glfwGetTime()), 0.0f, 0.0f);
         //input
         processInput(window, GLFW_KEY_ESCAPE, closeWindow);
 
@@ -156,8 +156,8 @@ int main()
         ourShader.setMatrix("model", model1.modelMat);
         //view matrix is depedent on camera, which isn't set yet
         glm::mat4 view = glm::mat4();
-        //view = glm::rotate(view, glm::radians(25 * glm::sin((float)glfwGetTime())), glm::vec3(1.0f, 0.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.5f));
+        view = glm::translate(view, glm::vec3(0.0f, -0.5f, -4.5f));
+        view = glm::rotate(view, glm::radians(20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         ourShader.setMatrix("view", view);
         ourShader.setMatrix("projection", projectionMat(45.0f, 8/6, 0.1f, 100.0f, false));
 
@@ -168,7 +168,7 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
 
-        model1.modelMat = glm::translate(glm::mat4(), glm::vec3(0.5f, 0.0f, 0.0f));
+        model1.modelMat = glm::mat4();
     }
 
     model1.freeRender();
