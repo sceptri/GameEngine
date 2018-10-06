@@ -177,15 +177,16 @@ void renderingUnit::activateAttribPointer(unsigned int pointer) const
 
 void renderingUnit::deleteVBOs(bool EBOdel)
 {
-    while(index > 0)
+    index--; //we have to subtract one from index var because in the of the loadtoVAO func add one to it even if it's never used afterwards
+    while(index >= 0)
     {
-        glDeleteBuffers(GL_ARRAY_BUFFER, &vboIDs[index--]);
+        glDeleteBuffers(1, &(vboIDs[index--]));
     }
     if(EBOdel)
-        glDeleteBuffers(GL_ELEMENT_ARRAY_BUFFER, &EBO);
+        glDeleteBuffers(1, &EBO);
 }
 
 void renderingUnit::deleteVAO()
 {
-    glDeleteVertexArrays(GL_VERTEX_ARRAY, &vaoID);
+    glDeleteVertexArrays(1, &vaoID);
 }

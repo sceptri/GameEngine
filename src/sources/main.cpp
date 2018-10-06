@@ -115,11 +115,11 @@ int main()
 
     model1.rUnit.genVAO();
     model1.rUnit.bindVAO();
-    int at1 = model1.rUnit.loadToVAOf(vertices, 3, sizeof (vertices));
-    int at2 = model1.rUnit.loadToVAOf(texCoords, 2, sizeof (texCoords));
+    int attrib1 = model1.rUnit.loadToVAOf(vertices, 3, sizeof (vertices));
+    int attrib2 = model1.rUnit.loadToVAOf(texCoords, 2, sizeof (texCoords));
     model1.rUnit.loadIndices(indices, sizeof (indices));
-    model1.rUnit.activateAttribPointer(at1);
-    model1.rUnit.activateAttribPointer(at2);
+    model1.rUnit.activateAttribPointer(attrib1);
+    model1.rUnit.activateAttribPointer(attrib2);
 
     //loading shaders, parsing them, linking them etc.
     shader ourShader("/home/sceptri/Dev/Dev/QtWorkspace/GameEngine/shaders/shader.vs",
