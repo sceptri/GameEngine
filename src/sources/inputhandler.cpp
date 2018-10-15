@@ -1,13 +1,10 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-//setting esc to close window
-void processInput(GLFWwindow* window, int key, void(*func)(GLFWwindow* window))
+#include "src/headers/inputhandler.h"
+bool processInput(GLFWwindow* window, int key)
 {
-    if(glfwGetKey(window, key)== GLFW_PRESS)
-    {
-        func(window);
-    }
+    if(glfwGetKey(window, key) == GLFW_PRESS)
+        return true;
+    else
+        return false;
 }
 
 void closeWindow(GLFWwindow* window)

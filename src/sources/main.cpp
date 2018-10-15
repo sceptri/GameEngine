@@ -1,6 +1,9 @@
 /*
  *
- * Re-write class function using c_var notation for better readablity
+ * Revise the code I have written on 15th of october and earlier and maybe rework some parts
+ *
+ * ADD NOTES:
+ *  add explanation in camera.cpp for reverse mouse movement
  *
 */
 
@@ -18,7 +21,23 @@
 int base_width = 800;
 int base_height = 600;
 
+float deltaTime = 0;
+float lastTime = 0;
+
 bool model::renderPrepared = false;
+
+template<typename... Args>
+void sth(Args&&... args)
+{
+
+}
+
+template<typename T,typename... Args>
+void log(T t, Args... args)
+{
+    std::cout << t;
+    log(args...);
+}
 
 int main()
 {
@@ -130,18 +149,41 @@ int main()
 
     model1.freeRender();
 
+    camera cam = camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
     //Draw in wireframe mode?
     //yes
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //no
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+
+    //setting cursor to have a position callback to rotateCameraMouse from camera class
+    setCursorPosCallback(window, &cam);
+
+    //set scroll whell to have a callback, which calls changeFOV from camera class
+    setScrollCallback(window, &cam);
+
+    //set cursor to disappear, AKA FPS cursor
+    setFPSCursor(window, true);
+
     while(!glfwWindowShouldClose(window))
     {
-        model1.rotate(glfwGetTime(), 0, 1, 0, true);
-        model1.translate(2*glm::sin(glfwGetTime()), 0.0f, 0.0f);
+        //get current delta time
+        getDeltaTime();
+
         //input
-        processInput(window, GLFW_KEY_ESCAPE, closeWindow);
+        if (processInput(window,GLFW_KEY_ESCAPE))
+            closeWindow(window);
+
+        if(processInput(window, GLFW_KEY_W))
+            cam.translateCam(FORWARD);
+        if(processInput(window, GLFW_KEY_S))
+            cam.translateCam(BACKWARD);
+        if(processInput(window, GLFW_KEY_A))
+            cam.translateCam(LEFT);
+        if(processInput(window, GLFW_KEY_D))
+            cam.translateCam(RIGHT);
 
         //clearing window with color
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -153,13 +195,9 @@ int main()
         ourShader.use();
         ourShader.setInt("Texture1", tex1);
         ourShader.setInt("Texture2", tex2);
-        ourShader.setMatrix("model", model1.modelMat);
-        //view matrix is depedent on camera, which isn't set yet
-        glm::mat4 view = glm::mat4();
-        view = glm::translate(view, glm::vec3(0.0f, -0.5f, -4.5f));
-        //view = glm::rotate(view, glm::radians(20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        ourShader.setMatrix("view", view);
-        ourShader.setMatrix("projection", projectionMat(45.0f, 8/6, 0.1f, 100.0f, false));
+        ourShader.setMat4("model", model1.modelMat);
+        ourShader.setMat4("view", cam.getViewMat());
+        ourShader.setMat4("projection", projectionMat(45.0f, 8/6, 0.1f, 100.0f, false));
 
         glClearError();
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);

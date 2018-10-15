@@ -1,7 +1,8 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
-void processInput(GLFWwindow* window, int key, void(*func)(GLFWwindow* window));
+bool processInput(GLFWwindow* window, int key);
 
 void closeWindow(GLFWwindow* window);

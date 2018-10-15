@@ -8,3 +8,4 @@
 #include "src/headers/errorhandler.h"
 #include "src/headers/model.h"
 #include "src/headers/glmath.h"
+#include "src/headers/camera.h"
