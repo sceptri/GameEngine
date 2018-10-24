@@ -17,6 +17,8 @@ enum camMovement
     RIGHT
 };
 
+#define PI 3.14159265
+
 class camera
 {
 public:
@@ -25,12 +27,12 @@ public:
                        //can be visualised as a small point, which camera is facing all the time(that illustration above where * is the point)
     glm::vec3 camUp; //defines the up direction for the camera
 
-    float pitch;
-    float yaw;
+    double pitch = 0;
+    double yaw = 0;
 
     camera();
     camera(glm::vec3 pos, glm::vec3 face, glm::vec3 upDir);
-    camera(glm::vec3 pos, float pitch, float yaw, glm::vec3 upDir);
+    camera(glm::vec3 pos, double pitch, double yaw, glm::vec3 upDir);
 
     glm::mat4 getViewMat();
     float getFOV() const;
@@ -42,14 +44,15 @@ public:
 private:
     glm::mat4 viewMat;
 
-    float lastX;
-    float lastY;
+    double lastX;
+    double lastY;
     bool firstMouse = true;
 
-    float sensitivity = 0.05f;
+    float sensitivity = 0.025f;
     float camTranslateSpeed = 2.5f;
 
-    float fov;
+    float fov = 45.0f;
 
-    glm::vec3 calcCamFaceFromRot();
+    void calcCamFaceFromRot();
+    void calcRotFromCamFace();
 };

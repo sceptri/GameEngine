@@ -9,6 +9,10 @@ camera::camera()
 {
     lastX = base_width/2;
     lastY = base_height/2;
+
+    camFace = glm::vec3(0, 0, -1);
+
+    calcRotFromCamFace();
 }
 
 camera::camera(glm::vec3 pos, glm::vec3 face, glm::vec3 upDir)
@@ -17,16 +21,19 @@ camera::camera(glm::vec3 pos, glm::vec3 face, glm::vec3 upDir)
     camFace = face;
     camUp = upDir;
 
+    calcRotFromCamFace();
+
     lastX = base_width/2;
     lastY = base_height/2;
 }
 
-camera::camera(glm::vec3 pos, float pitch, float yaw, glm::vec3 upDir)
+camera::camera(glm::vec3 pos, double pitch, double yaw, glm::vec3 upDir)
 {
     camPos = pos;
 
     this->yaw = yaw;
     this->pitch = pitch;
+
     calcCamFaceFromRot();
 
     camUp = upDir;
@@ -52,27 +59,27 @@ void camera::rotateCameraMouse(double xpos, double ypos)
 {
     if(firstMouse)
     {
-        lastX = float(xpos);
-        lastY = float(ypos);
+        lastX = xpos;
+        lastY = ypos;
         firstMouse = false;
     }
 
-    float xoffset = float(xpos) - lastX;
-    float yoffset = lastY - float(ypos); //because otherwise mousemovement is inversed -- add explanation
-    lastX = float(xpos);
-    lastY = float(ypos);
+    double xoffset = xpos - lastX;
+    double yoffset = lastY - ypos; //because otherwise mousemovement is inversed -- add explanation
+    lastX = xpos;
+    lastY = ypos;
 
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
+    xoffset *= double(sensitivity);
+    yoffset *= double(sensitivity);
 
     yaw += xoffset;
     pitch += yoffset;
 
     //gimball -- lock to prevent turning camera upside down etc
-    if(pitch > 89.0f)
-        pitch = 89.0f;
-    if(pitch < -89.0f)
-        pitch = -89.0f;
+    if(pitch > 89.0)
+        pitch = 89.0;
+    if(pitch < -89.0)
+        pitch = -89.0;
 
     calcCamFaceFromRot();
 }
@@ -118,12 +125,18 @@ void camera::translateCam(int direction)
     }
 }
 
-glm::vec3 camera::calcCamFaceFromRot()
+void camera::calcCamFaceFromRot()
 {
     //more in explanation of camFace and in picture
-    camFace.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    camFace.y = sin(glm::radians(pitch));
-    camFace.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    camFace = glm::normalize(camFace);
 
+    camFace.x = float(cos(glm::radians(yaw)) * cos(glm::radians(pitch)));
+    camFace.y = float(sin(glm::radians(pitch)));
+    camFace.z = float(sin(glm::radians(yaw)) * cos(glm::radians(pitch)));
+    camFace = glm::normalize(camFace);
+}
+
+void camera::calcRotFromCamFace()
+{
+    pitch = asin(double(camFace.y)) * (180/PI);
+    yaw = asin(double(camFace.z) / cos(glm::radians(pitch))) * (180/PI);
 }

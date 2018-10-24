@@ -2,6 +2,8 @@
  *
  * Revise the code I have written on 15th of october and earlier and maybe rework some parts
  *
+ * WRITE INVERSE CALCULATE CAMFACE IN CAMERA CLASS, TO BE ABLE TO GET FROM CAMFACE TO PITCH AND YAW
+ *
  * ADD NOTES:
  *  add explanation in camera.cpp for reverse mouse movement
  *
@@ -197,7 +199,7 @@ int main()
         ourShader.setInt("Texture2", tex2);
         ourShader.setMat4("model", model1.modelMat);
         ourShader.setMat4("view", cam.getViewMat());
-        ourShader.setMat4("projection", projectionMat(45.0f, 8/6, 0.1f, 100.0f, false));
+        ourShader.setMat4("projection", projectionMat(cam.getFOV(), base_width/base_height, 0.1f, 100.0f, false));
 
         glClearError();
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
