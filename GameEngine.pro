@@ -13,7 +13,8 @@ SOURCES += \
     src/sources/stb_image.cpp \
     src/sources/model.cpp \
     src/sources/glmath.cpp \
-    src/sources/camera.cpp
+    src/sources/camera.cpp \
+    src/sources/entity.cpp
 
 HEADERS += \
     src/headers/displaymanager.h \
@@ -25,7 +26,8 @@ HEADERS += \
     src/headers/errorhandler.h \
     src/headers/model.h \
     src/headers/glmath.h \
-    src/headers/camera.h
+    src/headers/camera.h \
+    src/headers/entity.h
 
 unix|win32: LIBS += -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 

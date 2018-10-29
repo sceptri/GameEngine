@@ -28,19 +28,6 @@ float lastTime = 0;
 
 bool model::renderPrepared = false;
 
-template<typename... Args>
-void sth(Args&&... args)
-{
-
-}
-
-template<typename T,typename... Args>
-void log(T t, Args... args)
-{
-    std::cout << t;
-    log(args...);
-}
-
 int main()
 {
     GLFWwindow* window;
